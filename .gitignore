@@ -1,12 +1,24 @@
-*.class
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
+bin/
+gen/
+*.log
 *.jar
-*.war
-*.ear
+!*/assets/*.jar
+!libs/*.jar
+!*/libs/*.jar
+*.swp
+doc/
+obj/
+local.properties
+Documentation/
+.metadata
+lint.xml
+export/
+.DS_Store
+/tags
+/.tags
+build/
+*.iml
+dump.txt
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+assets/crashlytics-build.properties
+res/values/com_crashlytics_export_strings.xml
