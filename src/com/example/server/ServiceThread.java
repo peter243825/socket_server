@@ -10,7 +10,6 @@ import java.net.Socket;
 
 public class ServiceThread extends Thread {
     private static final int kBufferSize = 1024 * 1024;
-    private static final byte[] emptyBuffer = new byte[0];
     private final Socket socket;
     private final byte[] buffer;
 
@@ -43,16 +42,22 @@ public class ServiceThread extends Thread {
                     break;
                 }
                 final String fileName = str;
-                FileUtils.writeToFile(fileName, emptyBuffer, false);
+                boolean firstWrite = true;
+
                 final long fileLength = din.readLong();
                 long currentReceivedLength = 0;
                 while (currentReceivedLength < fileLength) {
                     final int readSize = din.read(buffer);
                     if (readSize > 0) {
                         currentReceivedLength += readSize;
-                        FileUtils.writeToFile(fileName, buffer, 0, readSize, true);
+                        FileUtils.writeToFile(fileName, buffer, 0, readSize, !firstWrite);
+                        firstWrite = false;
+                        final double percent = currentReceivedLength * 100.0 / fileLength;
+                        str = "received: " + percent + "%(" + currentReceivedLength + "/" + fileLength + ")";
+                        Log.log(str);
                     } else {
                         Log.log("error: stream reach to end before complete");
+                        sleep(10);
                     }
                 }
                 str = "FileReceived";
