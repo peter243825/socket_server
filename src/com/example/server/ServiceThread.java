@@ -29,14 +29,14 @@ public class ServiceThread extends Thread {
             dout.writeUTF(str);
             str = din.readUTF();
             if (!str.isEmpty()) {
-                Log.log("receive:\n" + str);
+                Log.log("receive: " + str);
             }
             str = "AgentInfoReady";
             dout.writeUTF(str);
             while (true) {
                 str = din.readUTF();
                 if (!str.isEmpty()) {
-                    Log.log("receive:\n" + str);
+                    Log.log("receive: " + str);
                 } else {
                     Log.log("received nothing, break");
                     break;
